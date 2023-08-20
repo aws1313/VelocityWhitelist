@@ -1,6 +1,6 @@
 
 # 📃VelocityWhitelist
-A Proxy wide Whitelist for Velocity
+A Proxy wide Whitelist for Velocity **with added Geyser/Floodgate support**
 
 ## Permissions
 | Permission | Purpose |
@@ -20,8 +20,13 @@ A Proxy wide Whitelist for Velocity
 
 ## Config
 ```toml
-# Whether the whitelist should be on or off
-enabled = true
-# The message to be shown on user disconnect
-message = "&cWhitelist enabled!"
+# Is the whitelist enabled?
+enabled = false
+
+# Are Floodgate and Geyser installed?
+geyserFloodgateEnabled = false
+geyserPrefix = ""
+
+# What is the kick message?
+message = "&aWhitelist enabled!"
 ```

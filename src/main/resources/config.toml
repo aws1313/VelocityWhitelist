@@ -1,5 +1,9 @@
 # Is the whitelist enabled?
 enabled = false
 
+# Are Floodgate and Geyser installed?
+geyserFloodgateEnabled = false
+geyserPrefix = ""
+
 # What is the kick message?
 message = "&aWhitelist enabled!"

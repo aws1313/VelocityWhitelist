@@ -98,13 +98,20 @@ public class Configs {
 
         @Getter @Setter
         private boolean enabled;
+
+
+        @Getter
+        boolean geyserFloodgateEnabled;
+        @Getter
+        private String geyserPrefix;
         @Getter
         private String message;
-
         @Override
         public String toString() {
             return "Panel{" +
                 "enabled='" + enabled + '\'' +
+                ", geyserFloodgateEnabled='"+geyserFloodgateEnabled + '\''+
+                ", geyserPrefix='"+geyserPrefix+'\''+
                 ", message='" + message + '\'' +
             '}';
         }

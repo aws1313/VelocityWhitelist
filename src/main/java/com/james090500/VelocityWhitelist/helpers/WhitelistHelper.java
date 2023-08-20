@@ -37,7 +37,7 @@ public class WhitelistHelper {
             if(uuid == null) {
                 source.sendMessage(LegacyComponentSerializer.legacyAmpersand().deserialize("&c" + velocityWhitelist.PREFIX + username + " is not a valid username"));
             } else if(Configs.getWhitelist().contains(uuid)) {
-                source.sendMessage(LegacyComponentSerializer.legacyAmpersand().deserialize("&a" + velocityWhitelist.PREFIX + username + " is already in the whitelist"));
+                source.sendMessage(LegacyComponentSerializer.legacyAmpersand().deserialize("&a" + velocityWhitelist.PREFIX + username + "with UUID" + uuid + " is already in the whitelist"));
             } else {
                 Configs.getWhitelist().add(uuid);
                 Configs.saveWhitelist(velocityWhitelist);
