@@ -13,6 +13,7 @@ import java.io.FileWriter;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashSet;
@@ -21,13 +22,16 @@ import java.util.UUID;
 
 public class Configs {
 
-    @Getter private static Config config;
-    @Getter private static Set<UUID> whitelist = new HashSet<>();
+    @Getter
+    private static Config config;
+    @Getter
+    private static Set<UUID> whitelist = new HashSet<>();
     private static Path configFile;
     private static Path whitelistFile;
 
     /**
      * Loads the config files.
+     *
      * @param velocityWhitelist
      */
     public static void loadConfigs(VelocityWhitelist velocityWhitelist) {
@@ -35,12 +39,12 @@ public class Configs {
         whitelistFile = Path.of(velocityWhitelist.getDataDirectory() + "/whitelist.json");
 
         //Create data directory
-        if(!velocityWhitelist.getDataDirectory().toFile().exists()) {
+        if (!velocityWhitelist.getDataDirectory().toFile().exists()) {
             velocityWhitelist.getDataDirectory().toFile().mkdir();
         }
 
         //Load the config.toml to memory
-        if(!configFile.toFile().exists()) {
+        if (!configFile.toFile().exists()) {
             try (InputStream in = VelocityWhitelist.class.getResourceAsStream("/config.toml")) {
                 Files.copy(in, configFile);
             } catch (Exception e) {
@@ -51,9 +55,10 @@ public class Configs {
         config = new Toml().read(configFile.toFile()).to(Config.class);
 
         //Load whitelist players to memory (if any)
-        if(whitelistFile.toFile().exists()) {
-            try (InputStreamReader inputStreamReader = new InputStreamReader(new FileInputStream(whitelistFile.toFile()), "UTF8")) {
-                Type whitelistSetType = new TypeToken<HashSet<UUID>>(){}.getType();
+        if (whitelistFile.toFile().exists()) {
+            try (InputStreamReader inputStreamReader = new InputStreamReader(new FileInputStream(whitelistFile.toFile()), StandardCharsets.UTF_8)) {
+                Type whitelistSetType = new TypeToken<HashSet<UUID>>() {
+                }.getType();
                 whitelist = new Gson().fromJson(inputStreamReader, whitelistSetType);
             } catch (Exception e) {
                 velocityWhitelist.getLogger().error("Error loading whitelist.json");
@@ -64,6 +69,7 @@ public class Configs {
 
     /**
      * Save the config
+     *
      * @param velocityWhitelist
      */
     public static void saveConfig(VelocityWhitelist velocityWhitelist) {
@@ -77,6 +83,7 @@ public class Configs {
 
     /**
      * Save the whitelist file
+     *
      * @param velocityWhitelist
      */
     public static void saveWhitelist(VelocityWhitelist velocityWhitelist) {
@@ -96,24 +103,24 @@ public class Configs {
      */
     public class Config {
 
-        @Getter @Setter
-        private boolean enabled;
-
-
         @Getter
         boolean geyserFloodgateEnabled;
+        @Getter
+        @Setter
+        private boolean enabled;
         @Getter
         private String geyserPrefix;
         @Getter
         private String message;
+
         @Override
         public String toString() {
             return "Panel{" +
-                "enabled='" + enabled + '\'' +
-                ", geyserFloodgateEnabled='"+geyserFloodgateEnabled + '\''+
-                ", geyserPrefix='"+geyserPrefix+'\''+
-                ", message='" + message + '\'' +
-            '}';
+                    "enabled='" + enabled + '\'' +
+                    ", geyserFloodgateEnabled='" + geyserFloodgateEnabled + '\'' +
+                    ", geyserPrefix='" + geyserPrefix + '\'' +
+                    ", message='" + message + '\'' +
+                    '}';
         }
     }
 }

@@ -10,7 +10,7 @@ import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 
 public class CommandHandler {
 
-    private VelocityWhitelist velocityWhitelist;
+    private final VelocityWhitelist velocityWhitelist;
 
     public CommandHandler(VelocityWhitelist velocityWhitelist) {
         this.velocityWhitelist = velocityWhitelist;
@@ -18,6 +18,7 @@ public class CommandHandler {
 
     /**
      * A bit of basic about information
+     *
      * @param commandSourceCommandContext
      * @return
      */
@@ -31,12 +32,13 @@ public class CommandHandler {
 
     /**
      * Turn on the whitelist
+     *
      * @param commandSourceCommandContext
      * @return
      */
     public int turnOn(CommandContext<CommandSource> commandSourceCommandContext) {
         CommandSource source = commandSourceCommandContext.getSource();
-        if(Configs.getConfig().isEnabled()) {
+        if (Configs.getConfig().isEnabled()) {
             source.sendMessage(LegacyComponentSerializer.legacyAmpersand().deserialize("&c" + velocityWhitelist.PREFIX + "Whitelist is already turned on"));
         } else {
             Configs.getConfig().setEnabled(true);
@@ -48,12 +50,13 @@ public class CommandHandler {
 
     /**
      * Turn off the whitelist
+     *
      * @param commandSourceCommandContext
      * @return
      */
     public int turnOff(CommandContext<CommandSource> commandSourceCommandContext) {
         CommandSource source = commandSourceCommandContext.getSource();
-        if(!Configs.getConfig().isEnabled()) {
+        if (!Configs.getConfig().isEnabled()) {
             source.sendMessage(LegacyComponentSerializer.legacyAmpersand().deserialize("&c" + velocityWhitelist.PREFIX + "Whitelist is already turned off"));
         } else {
             Configs.getConfig().setEnabled(false);
@@ -66,13 +69,14 @@ public class CommandHandler {
     /**
      * The command for /vwhitelist add <username>
      * Handles adding a user to the whitelist
+     *
      * @param commandSourceCommandContext
      * @return
      */
     public int add(CommandContext<CommandSource> commandSourceCommandContext) {
         CommandSource source = commandSourceCommandContext.getSource();
         ParsedArgument<CommandSource, ?> username = commandSourceCommandContext.getArguments().get("username");
-        if(username == null) {
+        if (username == null) {
             source.sendMessage(LegacyComponentSerializer.legacyAmpersand().deserialize("&c" + velocityWhitelist.PREFIX + "Syntax /vwhitelist add <username>"));
             return 1;
         }
@@ -84,13 +88,14 @@ public class CommandHandler {
     /**
      * The command for /vwhitelist remove <username>
      * Handles removing a user from the whitelist
+     *
      * @param commandSourceCommandContext
      * @return
      */
     public int remove(CommandContext<CommandSource> commandSourceCommandContext) {
         CommandSource source = commandSourceCommandContext.getSource();
         ParsedArgument<CommandSource, ?> username = commandSourceCommandContext.getArguments().get("username");
-        if(username == null) {
+        if (username == null) {
             source.sendMessage(LegacyComponentSerializer.legacyAmpersand().deserialize("&c" + velocityWhitelist.PREFIX + "Syntax /vwhitelist remove <username>"));
             return 1;
         }
@@ -101,6 +106,7 @@ public class CommandHandler {
 
     /**
      * Reloads the configs
+     *
      * @param commandSourceCommandContext
      * @return
      */

@@ -5,6 +5,7 @@ import com.james090500.VelocityWhitelist.commands.CommandBuilder;
 import com.james090500.VelocityWhitelist.commands.CommandHandler;
 import com.james090500.VelocityWhitelist.config.Configs;
 import com.james090500.VelocityWhitelist.listeners.JoinListener;
+import com.james090500.VelocityWhitelist.listeners.PreJoinListener;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import com.velocitypowered.api.command.CommandSource;
@@ -40,6 +41,7 @@ public class VelocityWhitelist {
 
         //Register listeners
         server.getEventManager().register(this, new JoinListener());
+        server.getEventManager().register(this, new PreJoinListener());
 
         //Setup command flow
         final CommandHandler handler = new CommandHandler(this);

@@ -20,6 +20,7 @@ public class CommandBuilder {
 
     /**
      * Reginster all commands
+     *
      * @param velocityWhitelist
      */
     public static void register(VelocityWhitelist velocityWhitelist) {
@@ -34,14 +35,14 @@ public class CommandBuilder {
                         .then(LiteralArgumentBuilder.<CommandSource>literal("add").executes(handler::add))
                         .then(LiteralArgumentBuilder.<CommandSource>literal("add")
                                 .then(RequiredArgumentBuilder.<CommandSource, String>argument("username", StringArgumentType.word())
-                                .suggests(CommandBuilder::allPlayers)
-                                .executes(handler::add)))
+                                        .suggests(CommandBuilder::allPlayers)
+                                        .executes(handler::add)))
 
                         .then(LiteralArgumentBuilder.<CommandSource>literal("remove").executes(handler::remove))
                         .then(LiteralArgumentBuilder.<CommandSource>literal("remove")
                                 .then(RequiredArgumentBuilder.<CommandSource, String>argument("username", StringArgumentType.word())
-                                .suggests(CommandBuilder::allPlayers)
-                                .executes(handler::remove)))
+                                        .suggests(CommandBuilder::allPlayers)
+                                        .executes(handler::remove)))
 
                         .then(LiteralArgumentBuilder.<CommandSource>literal("reload").requires(source -> source.hasPermission("vgui.admin")).executes(handler::reload))
         ));
@@ -49,6 +50,7 @@ public class CommandBuilder {
 
     /**
      * An all players tab suggestions
+     *
      * @param context
      * @param builder
      * @return

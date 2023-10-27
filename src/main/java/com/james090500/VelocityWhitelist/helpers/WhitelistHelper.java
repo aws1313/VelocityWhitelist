@@ -10,8 +10,8 @@ import java.util.UUID;
 
 public class WhitelistHelper {
 
-    private VelocityWhitelist velocityWhitelist;
-    private CommandSource source;
+    private final VelocityWhitelist velocityWhitelist;
+    private final CommandSource source;
 
     public WhitelistHelper(VelocityWhitelist velocityWhitelist, CommandSource source) {
         this.velocityWhitelist = velocityWhitelist;
@@ -20,23 +20,25 @@ public class WhitelistHelper {
 
     /**
      * Check if the player is in the whitelist OR has bypass permissions
+     *
      * @param player
      * @return If player is whitelisted or has bypass
      */
     public static boolean check(Player player) {
-        return player.hasPermission("vwhitelist.bypass") ? true : Configs.getWhitelist().contains(player.getUniqueId());
+        return player.hasPermission("vwhitelist.bypass") || Configs.getWhitelist().contains(player.getUniqueId());
     }
 
     /**
      * Add a player to the whitelist
+     *
      * @param username
      */
     public void add(String username) {
         velocityWhitelist.getServer().getScheduler().buildTask(velocityWhitelist, () -> {
             UUID uuid = new MinecraftApi(velocityWhitelist).getUUID(username);
-            if(uuid == null) {
+            if (uuid == null) {
                 source.sendMessage(LegacyComponentSerializer.legacyAmpersand().deserialize("&c" + velocityWhitelist.PREFIX + username + " is not a valid username"));
-            } else if(Configs.getWhitelist().contains(uuid)) {
+            } else if (Configs.getWhitelist().contains(uuid)) {
                 source.sendMessage(LegacyComponentSerializer.legacyAmpersand().deserialize("&a" + velocityWhitelist.PREFIX + username + "with UUID" + uuid + " is already in the whitelist"));
             } else {
                 Configs.getWhitelist().add(uuid);
@@ -48,14 +50,15 @@ public class WhitelistHelper {
 
     /**
      * Remove a player from the whitelist
+     *
      * @param username
      */
     public void remove(String username) {
         velocityWhitelist.getServer().getScheduler().buildTask(velocityWhitelist, () -> {
             UUID uuid = new MinecraftApi(velocityWhitelist).getUUID(username);
-            if(uuid == null) {
+            if (uuid == null) {
                 source.sendMessage(LegacyComponentSerializer.legacyAmpersand().deserialize("&c" + velocityWhitelist.PREFIX + username + " is not a valid username"));
-            } else if(!Configs.getWhitelist().contains(uuid)) {
+            } else if (!Configs.getWhitelist().contains(uuid)) {
                 source.sendMessage(LegacyComponentSerializer.legacyAmpersand().deserialize("&a" + velocityWhitelist.PREFIX + username + " is not in the whitelist"));
             } else {
                 Configs.getWhitelist().remove(uuid);

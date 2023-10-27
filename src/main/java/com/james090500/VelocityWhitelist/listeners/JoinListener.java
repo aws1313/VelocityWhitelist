@@ -1,6 +1,5 @@
 package com.james090500.VelocityWhitelist.listeners;
 
-import com.james090500.VelocityWhitelist.VelocityWhitelist;
 import com.james090500.VelocityWhitelist.config.Configs;
 import com.james090500.VelocityWhitelist.helpers.WhitelistHelper;
 import com.velocitypowered.api.event.PostOrder;
@@ -17,6 +16,12 @@ public class JoinListener {
     public void onPlayerJoin(LoginEvent event) {
         Player player = event.getPlayer();
         if(Configs.getConfig().isEnabled()) {
+            System.out.println("user"+player.getUsername());
+            System.out.println("saved"+PreJoinListener.preAllowed.toString());
+            if(PreJoinListener.preAllowed.contains(player.getUsername())){
+                event.setResult(ResultedEvent.ComponentResult.allowed());
+                return;
+            }
             if(!WhitelistHelper.check(player)) {
                 TextComponent kickMessage = LegacyComponentSerializer.legacyAmpersand().deserialize(Configs.getConfig().getMessage());
                 event.setResult(ResultedEvent.ComponentResult.denied(kickMessage));
